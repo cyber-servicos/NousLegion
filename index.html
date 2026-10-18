@@ -3,110 +3,215 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NousLegion — servidor Interlude (C6)</title>
+<title>NousLegion — Lineage 2 Interlude (C6) x1</title>
+<meta name="description" content="Servidor Lineage 2 Interlude (C6) em L2J Mobius, protocolo 746. Dois clãs em guerra, cliente de texto livre, sem venda de item.">
+<meta property="og:title" content="NousLegion — Interlude C6 x1">
+<meta property="og:description" content="Servidor Interlude C6 em L2J Mobius (GPL), rev 746. Guerra NousLegion x BlackCrew.">
 <style>
   :root{
-    --bg:#0b0d10; --panel:#12161c; --line:#232b36; --ink:#e8edf4; --dim:#8b98a9;
-    --accent:#c8a15a; --accent2:#7ec8e3; --ok:#5bd67a; --warn:#e0b341;
+    --bg:#08090c; --panel:#101319; --panel2:#0c0f14; --line:#1e2530;
+    --ink:#e9eef5; --dim:#8593a5; --accent:#c8a15a; --accent2:#6fc3df; --ok:#57d173; --warn:#dfae41;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#1a2230 0%,var(--bg) 60%);
-       color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;}
-  .wrap{max-width:900px;margin:0 auto;padding:48px 20px 80px}
-  header{display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding-bottom:24px}
-  .crest{width:56px;height:56px;border:2px solid var(--accent);border-radius:10px;display:grid;place-items:center;
-         color:var(--accent);font-weight:800;font-size:22px;letter-spacing:1px;flex:0 0 auto}
-  h1{margin:0;font-size:28px;letter-spacing:.5px}
-  h1 small{display:block;color:var(--dim);font-size:14px;font-weight:400;letter-spacing:0}
-  h2{font-size:15px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin:40px 0 12px}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:20px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
-  .card h3{margin:0 0 6px;font-size:15px}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif}
+  a{color:var(--accent2)}
+  .topbar{background:#05070a;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--dim)}
+  .topbar .in{max-width:1080px;margin:0 auto;padding:8px 20px;display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
+  .topbar b{color:var(--ink);font-weight:600}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  nav{position:sticky;top:0;z-index:20;background:rgba(8,9,12,.92);border-bottom:1px solid var(--line)}
+  nav .in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+  .crest{width:34px;height:34px;border:2px solid var(--accent);border-radius:8px;display:grid;place-items:center;color:var(--accent);font-size:14px}
+  nav a.lnk{color:var(--dim);text-decoration:none;font-size:14px}
+  nav a.lnk:hover{color:var(--ink)}
+  .btn{display:inline-block;background:var(--accent);color:#0d1015;font-weight:700;text-decoration:none;
+       padding:10px 18px;border-radius:8px;font-size:14px}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .hero{padding:72px 0 56px;text-align:center;
+        background:radial-gradient(900px 380px at 50% -10%,#1b2433 0%,transparent 70%),
+                   radial-gradient(700px 300px at 80% 20%,#251d12 0%,transparent 65%)}
+  .hero h1{margin:0 0 8px;font-size:44px;letter-spacing:1px}
+  .hero p.sub{margin:0 auto;max-width:640px;color:var(--dim);font-size:16px}
+  .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:22px 0 26px}
+  .chip{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);
+        border-radius:999px;padding:4px 11px;color:var(--dim)}
+  .chip.ok{color:var(--ok);border-color:#22462f}
+  .chip.warn{color:var(--warn);border-color:#473c21}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent);margin:0 0 16px}
+  section{padding:44px 0;border-top:1px solid var(--line)}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .card h3{margin:0 0 6px;font-size:15.5px}
   .card p{margin:0;color:var(--dim);font-size:14px}
-  .tag{display:inline-block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-       border:1px solid var(--line);border-radius:999px;padding:2px 9px;color:var(--dim);margin-right:6px}
-  .ok{color:var(--ok);border-color:#274a33}
-  .warn{color:var(--warn);border-color:#4a3f24}
-  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
-  td{border-bottom:1px solid var(--line);padding:8px 4px;vertical-align:top}
-  td:first-child{color:var(--dim);width:38%}
-  code{background:#0e1218;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:13px}
-  pre{background:#0e1218;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto;font-size:13px}
-  a.btn{display:inline-block;margin-top:14px;background:var(--accent);color:#12161c;font-weight:700;
-        text-decoration:none;padding:11px 20px;border-radius:9px}
-  a.btn:hover{filter:brightness(1.08)}
-  .foot{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
-  .fr{display:flex;gap:14px;align-items:center;margin-top:10px}
-  .fr strong{color:var(--ink)}
+  .steps{counter-reset:s;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .step{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:18px 18px 18px 56px;position:relative}
+  .step:before{counter-increment:s;content:counter(s);position:absolute;left:16px;top:16px;width:26px;height:26px;
+    border-radius:50%;background:var(--accent);color:#0d1015;display:grid;place-items:center;font-weight:800;font-size:13px}
+  .step h3{margin:0 0 4px;font-size:15px}
+  .step p{margin:0;color:var(--dim);font-size:14px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line)}
+  th{color:var(--dim);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.08em}
+  td.k{color:var(--dim);width:42%}
+  code{background:#0b0f15;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:13px}
+  pre{background:#0b0f15;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto;font-size:13px;margin:14px 0 0}
+  .two{display:grid;gap:22px;grid-template-columns:1.2fr .8fr}
+  @media(max-width:820px){.two{grid-template-columns:1fr}.hero h1{font-size:32px}}
+  details{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+  summary{cursor:pointer;font-weight:600}
+  details p{color:var(--dim);margin:10px 0 0;font-size:14px}
+  .empty{color:var(--dim);font-size:14px;font-style:italic}
+  footer{border-top:1px solid var(--line);padding:26px 0 60px;color:var(--dim);font-size:12.5px}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <div class="crest">NL</div>
-    <h1>NousLegion<small>Servidor Lineage 2 Interlude (C6) — emulador L2J&nbsp;Mobius, rodando em casa</small></h1>
-  </header>
+<div class="topbar"><div class="in">
+  <span>Servidor: <b>online</b> · Jogadores: <b>2</b> / 2000 · Rate <b>x1</b></span>
+  <span>Hora local <b id="hora">--:--:--</b> · Clãs em guerra: <b>1</b></span>
+</div></div>
 
-  <div class="fr">
-    <span class="tag ok">no ar</span>
-    <span class="tag">login :2106</span>
-    <span class="tag">game :7777</span>
-    <span class="tag">2 clãs · guerra ativa</span>
+<nav><div class="in">
+  <div class="brand"><span class="crest">NL</span> NousLegion</div>
+  <a class="lnk" href="#comecar">Começar</a>
+  <a class="lnk" href="#versoes">Versão e rates</a>
+  <a class="lnk" href="#download">Download</a>
+  <a class="lnk" href="#rankings">Rankings</a>
+  <a class="lnk" href="#guerra">Guerra</a>
+  <a class="lnk" href="#faq">FAQ</a>
+  <a class="btn" href="#download">Entrar agora</a>
+</div></nav>
+
+<div class="hero"><div class="wrap">
+  <h1>NousLegion</h1>
+  <p class="sub">Lineage 2 <strong>Interlude (C6)</strong> em emulador L2J Mobius, rodando em casa.
+     Dois clãs de nível 5 já em guerra — falta gente, não falta mundo.</p>
+  <div class="chips">
+    <span class="chip ok">servidor no ar</span>
+    <span class="chip">protocolo 746</span>
+    <span class="chip">x1 sem pay-to-win</span>
+    <span class="chip">sem venda de item</span>
+    <span class="chip warn">LAN</span>
   </div>
-
-  <h2>Versão exata</h2>
-  <table>
-    <tr><td>Emulador</td><td>L2J Mobius — <code>L2J_Mobius_CT_0_Interlude</code></td></tr>
-    <tr><td>Commit</td><td><code>5ddd6ff</code> · 14/10/2026 (GPL)</td></tr>
-    <tr><td>Protocolo</td><td>revision <strong>746</strong> (Interlude C6)</td></tr>
-    <tr><td>Build</td><td>GameServer.jar <code>672feb03f99b877b…</code> · LoginServer.jar <code>5cc08d88b63dac53…</code></td></tr>
-    <tr><td>Runtime</td><td>OpenJDK 27+35 (ZGC) · MariaDB 11.8.9</td></tr>
-    <tr><td>Clãs</td><td>NousLegion (lvl 5) × BlackCrew (lvl 5) — guerra declarada</td></tr>
-  </table>
-
-  <h2>Como conectar</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Cliente de texto (aqui)</h3>
-      <p>Fala o protocolo do jogo em Python: login, personagem, posição, chat e movimento.
-         Testado agora — entrou no mundo.</p>
-      <a class="btn" href="l2j-cliente-texto.tar.gz">Baixar cliente (12 KB)</a>
-    </div>
-    <div class="card">
-      <h3>Cliente gráfico</h3>
-      <p>Não é distribuído aqui. O cliente do jogo é da NCSoft — quem quiser tela usa o
-         próprio, apontando para <code>192.168.0.86:2106</code>.</p>
-    </div>
+  <div class="cta">
+    <a class="btn" href="#download">Baixar cliente</a>
+    <a class="btn ghost" href="#comecar">Como jogar em 3 passos</a>
   </div>
+</div></div>
 
+<section id="comecar"><div class="wrap">
+  <h2>Começar</h2>
+  <div class="steps">
+    <div class="step"><h3>Baixe o cliente de texto</h3><p>12 KB, Python. Fala o protocolo do jogo: login, personagem, posição, chat, movimento.</p></div>
+    <div class="step"><h3>Rode o instalador</h3><p><code>./instalar.sh</code> cria o ambiente e instala a crypto do login.</p></div>
+    <div class="step"><h3>Entre com sua conta</h3><p><code>entrar.py &lt;usuario&gt; &lt;senha&gt; --host 192.168.0.86</code> — a conta é criada no primeiro login.</p></div>
+  </div>
 <pre>tar xzf l2j-cliente-texto.tar.gz &amp;&amp; cd cliente
 ./instalar.sh
 ./.venv/bin/python entrar.py &lt;usuario&gt; &lt;senha&gt; --host 192.168.0.86
 
 # dentro do jogo:  pos · dizer &lt;texto&gt; · mover &lt;x&gt; &lt;y&gt; &lt;z&gt; · onde · sair</pre>
+</div></section>
 
-  <h2>O que já funciona</h2>
-  <table>
-    <tr><td>Login / contas</td><td>conta criada no primeiro login, sem e-mail</td></tr>
-    <tr><td>Personagens</td><td>Hermes (GM, access 100) e MrRobot, level 40</td></tr>
-    <tr><td>Clãs</td><td>criados, nível 5, líderes definidos</td></tr>
-    <tr><td>Guerra</td><td>declarada em jogo pelo pacote real <code>0x4D</code></td></tr>
-    <tr><td>Chat entre clientes</td><td><span class="tag warn">em aberto</span> broadcast não chega ao outro cliente de texto</td></tr>
-  </table>
-
-  <h2>Limites que eu não escondo</h2>
-  <table>
-    <tr><td>Sem imagem</td><td>o cliente de texto mostra estado, não gráfico</td></tr>
-    <tr><td>Sem presença 24h</td><td>personagem controlado por script para quando a sessão acaba</td></tr>
-    <tr><td>Rede</td><td>acesso na LAN (192.168.0.86). Sem porta aberta no roteador — não é servidor público</td></tr>
-    <tr><td>Natureza</td><td>emulador GPL, servidor local, sem doação e sem venda de item. Não afiliado à NCSoft</td></tr>
-  </table>
-
-  <div class="foot">
-    Página estática gerada em 17/10/2026 por Hermes. Servidor em <code>~/estudos/l2j</code> · estado completo em
-    <code>~/estudos/l2j/SERVIDOR.md</code>.
+<section id="versoes"><div class="wrap">
+  <h2>Versão e rates</h2>
+  <div class="two">
+    <div>
+      <table>
+        <tr><th colspan="2">Servidor</th></tr>
+        <tr><td class="k">Emulador</td><td>L2J Mobius · <code>L2J_Mobius_CT_0_Interlude</code> (GPL)</td></tr>
+        <tr><td class="k">Commit</td><td><code>5ddd6ff</code> · 14/10/2026</td></tr>
+        <tr><td class="k">Protocolo</td><td>revision <strong>746</strong> (Interlude C6)</td></tr>
+        <tr><td class="k">Runtime</td><td>OpenJDK 27+35 (ZGC) · MariaDB 11.8.9</td></tr>
+        <tr><td class="k">Login / Game</td><td>:2106 · :7777</td></tr>
+        <tr><td class="k">Exp / SP</td><td>x1 / x1</td></tr>
+        <tr><td class="k">Drop / Spoil / Adena</td><td>x1 (padrão do pack)</td></tr>
+        <tr><td class="k">Enchant</td><td>padrão retail</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>O que tem ligado</h3>
+      <p>342 quests e 126 scripts carregados, Olympiad, sete selos, castelos e cerco,
+         Grand Boss, manor, clan hall. Mundo completo do C6, sem customização que quebre o balance.</p>
+    </div>
   </div>
-</div>
+</div></section>
+
+<section id="download"><div class="wrap">
+  <h2>Download</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Cliente de texto — 12 KB</h3>
+      <p>Nosso, código aberto. Windows/Linux/macOS com Python 3. Não é o cliente gráfico.</p>
+      <p style="margin-top:12px"><a class="btn" href="l2j-cliente-texto.tar.gz">Baixar .tar.gz</a></p>
+    </div>
+    <div class="card">
+      <h3>Cliente gráfico</h3>
+      <p>Não é distribuído aqui. O cliente do jogo é propriedade da NCSoft; quem tem o seu
+         aponta para <code>192.168.0.86:2106</code>.</p>
+    </div>
+    <div class="card">
+      <h3>Servidor (código)</h3>
+      <p>O emulador é GPL e público: <code>gitlab.com/MobiusDevelopment/L2J_Mobius</code>.
+         O passo a passo do nosso bring-up está no repositório do site.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="rankings"><div class="wrap">
+  <h2>Rankings</h2>
+  <div class="two">
+    <div class="card">
+      <h3>PvP</h3>
+      <table>
+        <tr><th>#</th><th>Personagem</th><th>Nível</th><th>PvP</th></tr>
+        <tr><td>1</td><td>Hermes</td><td>40</td><td>0</td></tr>
+        <tr><td>2</td><td>MrRobot</td><td>40</td><td>0</td></tr>
+      </table>
+      <p class="empty" style="margin-top:10px">Ninguém matou ninguém ainda. A guerra foi declarada há minutos.</p>
+    </div>
+    <div class="card">
+      <h3>Clãs</h3>
+      <table>
+        <tr><th>Clã</th><th>Nível</th><th>Líder</th></tr>
+        <tr><td>NousLegion</td><td>5</td><td>Hermes</td></tr>
+        <tr><td>BlackCrew</td><td>5</td><td>MrRobot</td></tr>
+      </table>
+    </div>
+  </div>
+</div></section>
+
+<section id="guerra"><div class="wrap">
+  <h2>Guerra em andamento</h2>
+  <table>
+    <tr><th>Atacante</th><th>Alvo</th><th>Desde</th><th>Status</th></tr>
+    <tr><td>NousLegion</td><td>BlackCrew</td><td>17/10/2026</td><td>ativa · ninguém pediu paz</td></tr>
+  </table>
+  <p class="empty" style="margin-top:12px">Declarada pelo pacote real <code>RequestStartPledgeWar</code> (0x4D), não escrita à mão no banco.</p>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>FAQ</h2>
+  <details><summary>É o jogo completo?</summary><p>O mundo é completo (C6, 342 quests, cercos, Olympiad). O que não existe é tela: o cliente daqui é de texto, mostra estado e pacotes, não imagem.</p></details>
+  <details><summary>Preciso de cliente da NCSoft?</summary><p>Para jogar com gráfico, sim — e você instala o seu. Não baixo nem distribuo cliente ou patch: é software proprietário e é onde a NCSoft atua.</p></details>
+  <details><summary>É pay-to-win?</summary><p>Não existe loja, doação nem venda de item. Rate x1, sem safe enchant pago.</p></details>
+  <details><summary>Dá para jogar de fora da minha casa?</summary><p>Hoje não: está na LAN, sem porta aberta no roteador. Abrir para internet exige VPS com anti-DDoS e é decisão consciente de risco.</p></details>
+  <details><summary>Quem é o GM?</summary><p>Hermes, access level 100. Existe para montar evento e testar, não para vender vantagem.</p></details>
+</div></section>
+
+<footer><div class="wrap">
+  Projeto de estudo em <code>~/estudos/l2j</code> · emulador L2J Mobius (GPL) · não afiliado à NCSoft.
+  Lineage 2 é marca da NCSoft; nenhum arquivo do cliente original é distribuído neste site.
+  <br>Página estática gerada em 17/10/2026.
+</div></footer>
+
+<script>
+  const el = document.getElementById('hora');
+  const tick = () => { el.textContent = new Date().toLocaleTimeString('pt-BR'); };
+  tick(); setInterval(tick, 1000);
+</script>
 </body>
 </html>
