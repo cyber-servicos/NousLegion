@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NousLegion — servidor Interlude (C6)</title>
+<style>
+  :root{
+    --bg:#0b0d10; --panel:#12161c; --line:#232b36; --ink:#e8edf4; --dim:#8b98a9;
+    --accent:#c8a15a; --accent2:#7ec8e3; --ok:#5bd67a; --warn:#e0b341;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#1a2230 0%,var(--bg) 60%);
+       color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;}
+  .wrap{max-width:900px;margin:0 auto;padding:48px 20px 80px}
+  header{display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding-bottom:24px}
+  .crest{width:56px;height:56px;border:2px solid var(--accent);border-radius:10px;display:grid;place-items:center;
+         color:var(--accent);font-weight:800;font-size:22px;letter-spacing:1px;flex:0 0 auto}
+  h1{margin:0;font-size:28px;letter-spacing:.5px}
+  h1 small{display:block;color:var(--dim);font-size:14px;font-weight:400;letter-spacing:0}
+  h2{font-size:15px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin:40px 0 12px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:20px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h3{margin:0 0 6px;font-size:15px}
+  .card p{margin:0;color:var(--dim);font-size:14px}
+  .tag{display:inline-block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+       border:1px solid var(--line);border-radius:999px;padding:2px 9px;color:var(--dim);margin-right:6px}
+  .ok{color:var(--ok);border-color:#274a33}
+  .warn{color:var(--warn);border-color:#4a3f24}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+  td{border-bottom:1px solid var(--line);padding:8px 4px;vertical-align:top}
+  td:first-child{color:var(--dim);width:38%}
+  code{background:#0e1218;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:13px}
+  pre{background:#0e1218;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto;font-size:13px}
+  a.btn{display:inline-block;margin-top:14px;background:var(--accent);color:#12161c;font-weight:700;
+        text-decoration:none;padding:11px 20px;border-radius:9px}
+  a.btn:hover{filter:brightness(1.08)}
+  .foot{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
+  .fr{display:flex;gap:14px;align-items:center;margin-top:10px}
+  .fr strong{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="crest">NL</div>
+    <h1>NousLegion<small>Servidor Lineage 2 Interlude (C6) — emulador L2J&nbsp;Mobius, rodando em casa</small></h1>
+  </header>
+
+  <div class="fr">
+    <span class="tag ok">no ar</span>
+    <span class="tag">login :2106</span>
+    <span class="tag">game :7777</span>
+    <span class="tag">2 clãs · guerra ativa</span>
+  </div>
+
+  <h2>Versão exata</h2>
+  <table>
+    <tr><td>Emulador</td><td>L2J Mobius — <code>L2J_Mobius_CT_0_Interlude</code></td></tr>
+    <tr><td>Commit</td><td><code>5ddd6ff</code> · 14/10/2026 (GPL)</td></tr>
+    <tr><td>Protocolo</td><td>revision <strong>746</strong> (Interlude C6)</td></tr>
+    <tr><td>Build</td><td>GameServer.jar <code>672feb03f99b877b…</code> · LoginServer.jar <code>5cc08d88b63dac53…</code></td></tr>
+    <tr><td>Runtime</td><td>OpenJDK 27+35 (ZGC) · MariaDB 11.8.9</td></tr>
+    <tr><td>Clãs</td><td>NousLegion (lvl 5) × BlackCrew (lvl 5) — guerra declarada</td></tr>
+  </table>
+
+  <h2>Como conectar</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Cliente de texto (aqui)</h3>
+      <p>Fala o protocolo do jogo em Python: login, personagem, posição, chat e movimento.
+         Testado agora — entrou no mundo.</p>
+      <a class="btn" href="l2j-cliente-texto.tar.gz">Baixar cliente (12 KB)</a>
+    </div>
+    <div class="card">
+      <h3>Cliente gráfico</h3>
+      <p>Não é distribuído aqui. O cliente do jogo é da NCSoft — quem quiser tela usa o
+         próprio, apontando para <code>192.168.0.86:2106</code>.</p>
+    </div>
+  </div>
+
+<pre>tar xzf l2j-cliente-texto.tar.gz &amp;&amp; cd cliente
+./instalar.sh
+./.venv/bin/python entrar.py &lt;usuario&gt; &lt;senha&gt; --host 192.168.0.86
+
+# dentro do jogo:  pos · dizer &lt;texto&gt; · mover &lt;x&gt; &lt;y&gt; &lt;z&gt; · onde · sair</pre>
+
+  <h2>O que já funciona</h2>
+  <table>
+    <tr><td>Login / contas</td><td>conta criada no primeiro login, sem e-mail</td></tr>
+    <tr><td>Personagens</td><td>Hermes (GM, access 100) e MrRobot, level 40</td></tr>
+    <tr><td>Clãs</td><td>criados, nível 5, líderes definidos</td></tr>
+    <tr><td>Guerra</td><td>declarada em jogo pelo pacote real <code>0x4D</code></td></tr>
+    <tr><td>Chat entre clientes</td><td><span class="tag warn">em aberto</span> broadcast não chega ao outro cliente de texto</td></tr>
+  </table>
+
+  <h2>Limites que eu não escondo</h2>
+  <table>
+    <tr><td>Sem imagem</td><td>o cliente de texto mostra estado, não gráfico</td></tr>
+    <tr><td>Sem presença 24h</td><td>personagem controlado por script para quando a sessão acaba</td></tr>
+    <tr><td>Rede</td><td>acesso na LAN (192.168.0.86). Sem porta aberta no roteador — não é servidor público</td></tr>
+    <tr><td>Natureza</td><td>emulador GPL, servidor local, sem doação e sem venda de item. Não afiliado à NCSoft</td></tr>
+  </table>
+
+  <div class="foot">
+    Página estática gerada em 17/10/2026 por Hermes. Servidor em <code>~/estudos/l2j</code> · estado completo em
+    <code>~/estudos/l2j/SERVIDOR.md</code>.
+  </div>
+</div>
+</body>
+</html>
