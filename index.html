@@ -29,14 +29,19 @@
   .btn{display:inline-block;background:var(--accent);color:#0d1015;font-weight:700;text-decoration:none;
        padding:10px 18px;border-radius:8px;font-size:14px}
   .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-  .hero{padding:72px 0 56px;text-align:center;
-        background:radial-gradient(900px 380px at 50% -10%,#1b2433 0%,transparent 70%),
-                   radial-gradient(700px 300px at 80% 20%,#251d12 0%,transparent 65%)}
-  .hero h1{margin:0 0 8px;font-size:44px;letter-spacing:1px}
-  .hero p.sub{margin:0 auto;max-width:640px;color:var(--dim);font-size:16px}
+  .hero{padding:96px 0 80px;text-align:center;position:relative;overflow:hidden}
+  .hero:before{content:"";position:absolute;inset:0;
+    background:url("img/hero.jpg") center 30%/cover no-repeat;opacity:.42;
+    filter:saturate(.85) contrast(1.05);z-index:0}
+  .hero:after{content:"";position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg,rgba(8,9,12,.72) 0%,rgba(8,9,12,.55) 45%,rgba(8,9,12,.94) 100%),
+               radial-gradient(700px 300px at 80% 20%,rgba(200,161,90,.18) 0%,transparent 65%)}
+  .hero .wrap{position:relative;z-index:2}
+  .hero h1{margin:0 0 8px;font-size:52px;letter-spacing:2px;text-shadow:0 2px 24px rgba(0,0,0,.75)}
+  .hero p.sub{margin:0 auto;max-width:660px;color:#c9d3e0;font-size:16px;text-shadow:0 1px 8px rgba(0,0,0,.8)}
   .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:22px 0 26px}
-  .chip{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);
-        border-radius:999px;padding:4px 11px;color:var(--dim)}
+  .chip{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid #2a3342;
+        background:rgba(6,8,11,.66);border-radius:999px;padding:4px 11px;color:#b9c4d2}
   .chip.ok{color:var(--ok);border-color:#22462f}
   .chip.warn{color:var(--warn);border-color:#473c21}
   .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
@@ -64,6 +69,26 @@
   summary{cursor:pointer;font-weight:600}
   details p{color:var(--dim);margin:10px 0 0;font-size:14px}
   .empty{color:var(--dim);font-size:14px;font-style:italic}
+  /* painel de conta */
+  .panel{display:grid;gap:22px;grid-template-columns:.9fr 1.1fr}
+  @media(max-width:820px){.panel{grid-template-columns:1fr}}
+  .box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .tabs{display:flex;gap:8px;margin-bottom:16px}
+  .tab{flex:1;text-align:center;padding:9px 12px;border:1px solid var(--line);border-radius:8px;
+       background:transparent;color:var(--dim);font:inherit;font-size:14px;cursor:pointer}
+  .tab.on{background:var(--accent);color:#0d1015;border-color:var(--accent);font-weight:700}
+  label{display:block;font-size:12.5px;color:var(--dim);margin:12px 0 5px;letter-spacing:.04em}
+  input[type=text],input[type=password]{width:100%;background:#0b0f15;border:1px solid var(--line);
+    border-radius:8px;padding:11px 12px;color:var(--ink);font:inherit;font-size:14.5px}
+  input:focus{outline:none;border-color:var(--accent)}
+  button.enviar{margin-top:16px;width:100%;background:var(--accent);border:0;color:#0d1015;font:inherit;
+    font-weight:700;padding:12px;border-radius:8px;cursor:pointer;font-size:15px}
+  button.enviar:hover{filter:brightness(1.07)}
+  .msg{margin-top:12px;font-size:13.5px;min-height:20px}
+  .msg.err{color:#e4776f}.msg.ok{color:var(--ok)}
+  .tiny{font-size:12px;color:var(--dim);margin-top:14px;line-height:1.5}
+  .charline{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .charline span:last-child{color:var(--dim)}
   footer{border-top:1px solid var(--line);padding:26px 0 60px;color:var(--dim);font-size:12.5px}
 </style>
 </head>
@@ -81,8 +106,9 @@
   <a class="lnk" href="#download">Download</a>
   <a class="lnk" href="#rankings">Rankings</a>
   <a class="lnk" href="#guerra">Guerra</a>
+  <a class="lnk" href="#conta">Conta</a>
   <a class="lnk" href="#faq">FAQ</a>
-  <a class="btn" href="#download">Entrar agora</a>
+  <a class="btn" href="#conta">Entrar / Criar conta</a>
 </div></nav>
 
 <div class="hero"><div class="wrap">
@@ -114,6 +140,34 @@
 ./.venv/bin/python entrar.py &lt;usuario&gt; &lt;senha&gt; --host 192.168.0.86
 
 # dentro do jogo:  pos · dizer &lt;texto&gt; · mover &lt;x&gt; &lt;y&gt; &lt;z&gt; · onde · sair</pre>
+</div></section>
+
+<section id="conta"><div class="wrap">
+  <h2>Conta</h2>
+  <div class="panel">
+    <div class="box">
+      <div class="tabs">
+        <button class="tab on" data-modo="login">Entrar</button>
+        <button class="tab" data-modo="criar">Criar conta</button>
+      </div>
+      <form id="form-conta" autocomplete="off">
+        <label for="f-login">Login</label>
+        <input id="f-login" name="login" type="text" placeholder="4 a 16 letras/números" maxlength="16" required>
+        <label for="f-senha">Senha</label>
+        <input id="f-senha" name="password" type="password" placeholder="4 a 16 caracteres" maxlength="16" required>
+        <button class="enviar" type="submit" id="btn-enviar">Entrar</button>
+      </form>
+      <div class="msg" id="msg"></div>
+      <p class="tiny">A conta criada aqui é a mesma que loga no jogo — o site grava no banco do servidor
+         no formato que o LoginServer espera. Não pedimos e-mail.</p>
+    </div>
+    <div class="box">
+      <h3 style="margin:0 0 6px;font-size:15.5px" id="painel-titulo">Painel do jogador</h3>
+      <p class="tiny" style="margin:0 0 12px" id="painel-sub">Entre para ver seus personagens, clã, PvP e o status da guerra.</p>
+      <div id="painel-corpo" class="empty">Nenhuma sessão aberta.</div>
+      <div id="status-linha" class="tiny" style="margin-top:16px"></div>
+    </div>
+  </div>
 </div></section>
 
 <section id="versoes"><div class="wrap">
@@ -212,6 +266,85 @@
   const el = document.getElementById('hora');
   const tick = () => { el.textContent = new Date().toLocaleTimeString('pt-BR'); };
   tick(); setInterval(tick, 1000);
+
+  // ---- status do servidor ----
+  const statusLinha = document.getElementById('status-linha');
+  const topo = document.querySelector('.topbar .in span');
+  async function carregaStatus() {
+    try {
+      const r = await fetch('api/status', {cache: 'no-store'});
+      const d = await r.json();
+      if (d.erro) throw new Error(d.erro);
+      statusLinha.textContent = `${d.servidor} · ${d.jogadores} jogador(es) · ${d.guerras} guerra(s) · ${d.contas} conta(s) no banco`;
+      const t = document.querySelector('.topbar .in span');
+      if (t) t.innerHTML = `Servidor: <b>${d.servidor}</b> · Jogadores: <b>${d.jogadores}</b> / 2000 · Rate <b>x1</b>`;
+    } catch (e) {
+      statusLinha.textContent = 'API offline — o painel só funciona rodando server.py na máquina do servidor.';
+    }
+  }
+  carregaStatus(); setInterval(carregaStatus, 30000);
+
+  // ---- login / criar conta ----
+  let modo = 'login';
+  const tabs = document.querySelectorAll('.tab');
+  const form = document.getElementById('form-conta');
+  const msg = document.getElementById('msg');
+  const btn = document.getElementById('btn-enviar');
+
+  tabs.forEach(t => t.addEventListener('click', () => {
+    modo = t.dataset.modo;
+    tabs.forEach(x => x.classList.toggle('on', x === t));
+    btn.textContent = modo === 'login' ? 'Entrar' : 'Criar conta';
+    msg.textContent = ''; msg.className = 'msg';
+  }));
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    msg.textContent = 'falando com o servidor…'; msg.className = 'msg';
+    btn.disabled = true;
+    const dados = {
+      login: document.getElementById('f-login').value.trim(),
+      password: document.getElementById('f-senha').value
+    };
+    try {
+      const rota = modo === 'login' ? 'api/login' : 'api/register';
+      const r = await fetch(rota, {
+        method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(dados)
+      });
+      const d = await r.json();
+      if (!d.ok) {
+        msg.textContent = d.erro || 'falhou'; msg.className = 'msg err';
+      } else if (modo === 'criar') {
+        msg.textContent = d.msg || 'conta criada'; msg.className = 'msg ok';
+        mostraPainel({login: d.login, personagens: []});
+      } else {
+        msg.textContent = 'entrou como ' + d.login; msg.className = 'msg ok';
+        mostraPainel(d);
+        carregaStatus();
+      }
+    } catch (e) {
+      msg.textContent = 'API indisponível nesta página. O painel exige o server.py rodando.';
+      msg.className = 'msg err';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  function mostraPainel(d) {
+    document.getElementById('painel-titulo').textContent = 'Olá, ' + d.login + (d.gm ? ' (GM)' : '');
+    document.getElementById('painel-sub').textContent = 'Conta no servidor NousLegion · x1 · sem loja';
+    const corpo = document.getElementById('painel-corpo');
+    if (!d.personagens || d.personagens.length === 0) {
+      corpo.className = 'empty';
+      corpo.innerHTML = 'Nenhum personagem ainda. Crie o seu entrando no jogo — o personagem nasce em Talking Island.';
+      return;
+    }
+    corpo.className = '';
+    corpo.innerHTML = d.personagens.map(p =>
+      `<div class="charline"><span><b>${p.char_name}</b>${p.clan ? ' · ' + p.clan : ''}</span>
+       <span>nível ${p.level} · PvP ${p.pvpkills} · PK ${p.pkkills}</span></div>`
+    ).join('');
+  }
 </script>
 </body>
 </html>
