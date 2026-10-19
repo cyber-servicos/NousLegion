@@ -121,7 +121,7 @@
     <span class="chip">x100 sem pay-to-win</span>
     <span class="chip">sem venda de item</span>
     <span class="chip warn">LAN por enquanto</span>
-    <span class="chip warn">de fora: bloqueado por CGNAT</span>
+    <span class="chip ok">de fora: online via túnel</span>
   </div>
   <div class="cta">
     <a class="btn" href="#download">Baixar cliente</a>
@@ -134,11 +134,11 @@
   <div class="steps">
     <div class="step"><h3>Baixe o cliente de texto</h3><p>12 KB, Python. Fala o protocolo do jogo: login, personagem, posição, chat, movimento.</p></div>
     <div class="step"><h3>Rode o instalador</h3><p><code>./instalar.sh</code> cria o ambiente e instala a crypto do login.</p></div>
-    <div class="step"><h3>Entre com sua conta</h3><p><code>entrar.py &lt;usuario&gt; &lt;senha&gt; --host 192.168.0.86</code> — a conta é criada no primeiro login. Esse IP é da LAN de casa; de fora ainda não entra.</p></div>
+    <div class="step"><h3>Entre com sua conta</h3><p><code>entrar.py &lt;usuario&gt; &lt;senha&gt; --host bore.pub</code> — a conta é criada no primeiro login. De fora da rede usa <code>bore.pub</code>; na LAN, <code>192.168.0.86</code>.</p></div>
   </div>
 <pre>tar xzf l2j-cliente-texto.tar.gz &amp;&amp; cd cliente
 ./instalar.sh
-./.venv/bin/python entrar.py &lt;usuario&gt; &lt;senha&gt; --host 192.168.0.86
+./.venv/bin/python entrar.py &lt;usuario&gt; &lt;senha&gt; --host bore.pub   # LAN: --host 192.168.0.86
 
 # dentro do jogo:  pos · dizer &lt;texto&gt; · mover &lt;x&gt; &lt;y&gt; &lt;z&gt; · onde · sair</pre>
 </div></section>
@@ -182,6 +182,7 @@
         <tr><td class="k">Protocolo</td><td>revision <strong>746</strong> (Interlude C6)</td></tr>
         <tr><td class="k">Runtime</td><td>OpenJDK 27+35 (ZGC) · MariaDB 11.8.9</td></tr>
         <tr><td class="k">Login / Game</td><td>:2106 · :7777</td></tr>
+        <tr><td class="k">Acesso público</td><td><code>bore.pub:2106</code> · túnel TCP (sem SLA, sem anti-DDoS)</td></tr>
         <tr><td class="k">Exp / SP</td><td>x100 / x100</td></tr>
         <tr><td class="k">Drop / Spoil / Adena</td><td>3x / 3x / 20x</td></tr>
         <tr><td class="k">Start</td><td>level 1 · 1.000.000 adena · 1ª classe grátis no ClassMaster</td></tr>
@@ -255,7 +256,7 @@
   <details><summary>É o jogo completo?</summary><p>O mundo é completo (C6, 342 quests, cercos, Olympiad). O que não existe é tela: o cliente daqui é de texto, mostra estado e pacotes, não imagem.</p></details>
   <details><summary>Preciso de cliente da NCSoft?</summary><p>Para jogar com gráfico, sim — e você instala o seu. Não baixo nem distribuo cliente ou patch: é software proprietário e é onde a NCSoft atua.</p></details>
   <details><summary>É pay-to-win?</summary><p>Não existe loja, doação nem venda de item. Rate x100, sem safe enchant pago.</p></details>
-  <details><summary>Dá para jogar de fora da minha casa?</summary><p>Hoje não. Testado em 19/10: o roteador até aceita os mapeamentos 2106/7777 (feitos por UPnP), mas a linha está atrás de CGNAT da operadora — o IP WAN que o roteador reporta é 100.70.112.240, faixa 100.64/10, que não é roteável da internet. Solução real: IP público no plano, VPS de R$20-40/mês com proxy TCP, ou túnel (playit.gg).</p></details>
+  <details><summary>Dá para jogar de fora da minha casa?</summary><p>Agora sim, por túnel. A linha está atrás de CGNAT da Claro (WAN do roteador em 100.70.112.240, faixa 100.64/10), então port-forward não resolve. Subimos dois túneis TCP no bore.pub — <code>bore.pub:2106</code> e <code>:7777</code> — e o servidor anuncia o endereço público aos clientes. Testado de verdade: login, lista de personagem e entrada no mundo pela rota pública. Limite honesto: túnel de comunidade, sem SLA e sem anti-DDoS; aguenta teste e poucos players, não 50 em mass PvP. Isso é o VPS.</p></details>
   <details><summary>Quem é o GM?</summary><p>Hermes, access level 100. Existe para montar evento e testar, não para vender vantagem.</p></details>
 </div></section>
 
