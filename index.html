@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NousLegion — Lineage 2 Interlude (C6) x1</title>
+<title>NousLegion — Lineage 2 Interlude (C6) x100</title>
 <meta name="description" content="Servidor Lineage 2 Interlude (C6) em L2J Mobius, protocolo 746. Dois clãs em guerra, cliente de texto livre, sem venda de item.">
-<meta property="og:title" content="NousLegion — Interlude C6 x1">
+<meta property="og:title" content="NousLegion — Interlude C6 x100">
 <meta property="og:description" content="Servidor Interlude C6 em L2J Mobius (GPL), rev 746. Guerra NousLegion x BlackCrew.">
 <style>
   :root{
@@ -95,7 +95,7 @@
 <body>
 
 <div class="topbar"><div class="in">
-  <span>Servidor: <b>online</b> · Jogadores: <b>2</b> / 2000 · Rate <b>x1</b></span>
+  <span>Servidor: <b>online</b> · Jogadores: <b>2</b> / 2000 · Rate <b>x100</b></span>
   <span>Hora local <b id="hora">--:--:--</b> · Clãs em guerra: <b>1</b></span>
 </div></div>
 
@@ -118,9 +118,10 @@
   <div class="chips">
     <span class="chip ok">servidor no ar</span>
     <span class="chip">protocolo 746</span>
-    <span class="chip">x1 sem pay-to-win</span>
+    <span class="chip">x100 sem pay-to-win</span>
     <span class="chip">sem venda de item</span>
-    <span class="chip warn">LAN</span>
+    <span class="chip warn">LAN por enquanto</span>
+    <span class="chip warn">de fora: bloqueado por CGNAT</span>
   </div>
   <div class="cta">
     <a class="btn" href="#download">Baixar cliente</a>
@@ -133,7 +134,7 @@
   <div class="steps">
     <div class="step"><h3>Baixe o cliente de texto</h3><p>12 KB, Python. Fala o protocolo do jogo: login, personagem, posição, chat, movimento.</p></div>
     <div class="step"><h3>Rode o instalador</h3><p><code>./instalar.sh</code> cria o ambiente e instala a crypto do login.</p></div>
-    <div class="step"><h3>Entre com sua conta</h3><p><code>entrar.py &lt;usuario&gt; &lt;senha&gt; --host 192.168.0.86</code> — a conta é criada no primeiro login.</p></div>
+    <div class="step"><h3>Entre com sua conta</h3><p><code>entrar.py &lt;usuario&gt; &lt;senha&gt; --host 192.168.0.86</code> — a conta é criada no primeiro login. Esse IP é da LAN de casa; de fora ainda não entra.</p></div>
   </div>
 <pre>tar xzf l2j-cliente-texto.tar.gz &amp;&amp; cd cliente
 ./instalar.sh
@@ -177,12 +178,14 @@
       <table>
         <tr><th colspan="2">Servidor</th></tr>
         <tr><td class="k">Emulador</td><td>L2J Mobius · <code>L2J_Mobius_CT_0_Interlude</code> (GPL)</td></tr>
-        <tr><td class="k">Commit</td><td><code>5ddd6ff</code> · 14/10/2026</td></tr>
+        <tr><td class="k">Commit</td><td><code>5ddd6ff</code> · rates x100 desde 19/10/2026</td></tr>
         <tr><td class="k">Protocolo</td><td>revision <strong>746</strong> (Interlude C6)</td></tr>
         <tr><td class="k">Runtime</td><td>OpenJDK 27+35 (ZGC) · MariaDB 11.8.9</td></tr>
         <tr><td class="k">Login / Game</td><td>:2106 · :7777</td></tr>
-        <tr><td class="k">Exp / SP</td><td>x1 / x1</td></tr>
-        <tr><td class="k">Drop / Spoil / Adena</td><td>x1 (padrão do pack)</td></tr>
+        <tr><td class="k">Exp / SP</td><td>x100 / x100</td></tr>
+        <tr><td class="k">Drop / Spoil / Adena</td><td>3x / 3x / 20x</td></tr>
+        <tr><td class="k">Start</td><td>level 1 · 1.000.000 adena · 1ª classe grátis no ClassMaster</td></tr>
+        <tr><td class="k">Extras</td><td><code>.sellbuff</code> (128 buffs) · 34.122 spawns · 196 raidboss</td></tr>
         <tr><td class="k">Enchant</td><td>padrão retail</td></tr>
       </table>
     </div>
@@ -251,15 +254,15 @@
   <h2>FAQ</h2>
   <details><summary>É o jogo completo?</summary><p>O mundo é completo (C6, 342 quests, cercos, Olympiad). O que não existe é tela: o cliente daqui é de texto, mostra estado e pacotes, não imagem.</p></details>
   <details><summary>Preciso de cliente da NCSoft?</summary><p>Para jogar com gráfico, sim — e você instala o seu. Não baixo nem distribuo cliente ou patch: é software proprietário e é onde a NCSoft atua.</p></details>
-  <details><summary>É pay-to-win?</summary><p>Não existe loja, doação nem venda de item. Rate x1, sem safe enchant pago.</p></details>
-  <details><summary>Dá para jogar de fora da minha casa?</summary><p>Hoje não: está na LAN, sem porta aberta no roteador. Abrir para internet exige VPS com anti-DDoS e é decisão consciente de risco.</p></details>
+  <details><summary>É pay-to-win?</summary><p>Não existe loja, doação nem venda de item. Rate x100, sem safe enchant pago.</p></details>
+  <details><summary>Dá para jogar de fora da minha casa?</summary><p>Hoje não. Testado em 19/10: o roteador até aceita os mapeamentos 2106/7777 (feitos por UPnP), mas a linha está atrás de CGNAT da operadora — o IP WAN que o roteador reporta é 100.70.112.240, faixa 100.64/10, que não é roteável da internet. Solução real: IP público no plano, VPS de R$20-40/mês com proxy TCP, ou túnel (playit.gg).</p></details>
   <details><summary>Quem é o GM?</summary><p>Hermes, access level 100. Existe para montar evento e testar, não para vender vantagem.</p></details>
 </div></section>
 
 <footer><div class="wrap">
   Projeto de estudo em <code>~/estudos/l2j</code> · emulador L2J Mobius (GPL) · não afiliado à NCSoft.
   Lineage 2 é marca da NCSoft; nenhum arquivo do cliente original é distribuído neste site.
-  <br>Página estática gerada em 17/10/2026.
+  <br>Página estática · atualizada em 19/10/2026 (rates x100).
 </div></footer>
 
 <script>
@@ -277,7 +280,7 @@
       if (d.erro) throw new Error(d.erro);
       statusLinha.textContent = `${d.servidor} · ${d.jogadores} jogador(es) · ${d.guerras} guerra(s) · ${d.contas} conta(s) no banco`;
       const t = document.querySelector('.topbar .in span');
-      if (t) t.innerHTML = `Servidor: <b>${d.servidor}</b> · Jogadores: <b>${d.jogadores}</b> / 2000 · Rate <b>x1</b>`;
+      if (t) t.innerHTML = `Servidor: <b>${d.servidor}</b> · Jogadores: <b>${d.jogadores}</b> / 2000 · Rate <b>x100</b>`;
     } catch (e) {
       statusLinha.textContent = 'API offline — o painel só funciona rodando server.py na máquina do servidor.';
     }
@@ -332,7 +335,7 @@
 
   function mostraPainel(d) {
     document.getElementById('painel-titulo').textContent = 'Olá, ' + d.login + (d.gm ? ' (GM)' : '');
-    document.getElementById('painel-sub').textContent = 'Conta no servidor NousLegion · x1 · sem loja';
+    document.getElementById('painel-sub').textContent = 'Conta no servidor NousLegion · x100 · sem loja';
     const corpo = document.getElementById('painel-corpo');
     if (!d.personagens || d.personagens.length === 0) {
       corpo.className = 'empty';
